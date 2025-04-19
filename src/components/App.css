@@ -1,0 +1,75 @@
+.ap-app {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  & .ap-app-loading {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    padding-bottom: 5rem;
+
+    & .ap-progressbar {
+      margin-top: 0.5rem;
+    }
+  }
+
+  transition: height 0.15s, margin-top 0.15s;
+
+  &.ap-app--scrolled {
+    margin-top: -2.5rem;
+    height: calc(100% + 2.5rem);
+    transition: height 0.1s, margin-top 0.1s;
+  }
+
+  & .ap-app-header {
+    height: 2.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: #EEE;
+    color: #004A7F;
+
+    
+    &::before {
+      content: ' ';
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: -15px;
+      right: -15px;
+      box-shadow: -15px 0px 3px 0px #AAA, 15px 0px 3px 0px #AAA;
+    }
+  }
+
+  & .ap-app-breadcrumbs {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  & .ap-app-main {
+    height: 0;
+    flex-shrink: 1;
+    flex-grow: 1;
+
+    overflow: auto;
+  }
+
+  & .ap-app-nav {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  & .ap-app-footer {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+}

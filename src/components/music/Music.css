@@ -1,0 +1,101 @@
+:root {
+  --ap-music-circle-size: 2rem;
+  --ap-music-border-color: grey;
+  --ap-music-note-color: black;
+  --ap-music-note-color--active: yellow;
+  --ap-music-note-color--playing: red;
+
+  --ap-music-period: 2s;
+  --ap-music-delay: 0s;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes play {
+  0%  { background-color: var(--ap-music-note-color--playing); }
+  10% { background-color: var(--ap-music-note-color--active); }
+  99% { background-color: var(--ap-music-note-color--active); }
+}
+
+.ap-music-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+
+  .ap-music-circle {
+    position: absolute;
+    top: calc(var(--ap-music-circle-size) + 0.25rem);
+    bottom: calc(var(--ap-music-circle-size) + 0.25rem);
+    left: calc(var(--ap-music-circle-size) + 0.25rem);
+    right: calc(var(--ap-music-circle-size) + 0.25rem);
+
+    border-radius: 50%;
+    border: 2px solid var(--ap-music-border-color);
+    background: transparent;
+
+    .ap-music-circle-inner {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      pointer-events: none;
+      cursor: grab;
+
+      .ap-music-circle-inner-note {
+        position: absolute;
+        top: calc(var(--ap-music-circle-size) / -2);
+        left: calc(50% + var(--ap-music-circle-size) / -2);
+        pointer-events: all;
+        width: var(--ap-music-circle-size);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 2px solid var(--ap-music-border-color);
+        background: var(--ap-music-note-color);
+        box-sizing: border-box;
+      }
+
+      &.ap-music-circle-inner--active {
+        .ap-music-circle-inner-note {
+          background-color: var(--ap-music-note-color--active);
+          transition: background-color calc(var(--ap-music-period) / 4);
+          animation: var(--ap-music-period) linear var(--ap-music-delay) infinite play;
+        }
+      }
+    }
+  }
+
+  .ap-music-clock {
+    position: absolute;
+    top: var(--ap-music-circle-size);
+    bottom: var(--ap-music-circle-size);
+    left: var(--ap-music-circle-size);
+    right: var(--ap-music-circle-size);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    animation: var(--ap-music-period) linear var(--ap-music-delay) infinite rotate;
+
+    .ap-music-clock-inner {
+      position: absolute;
+      top: 0;
+      bottom: 50%;
+      left: calc(50% - 1px);
+      width: 3px;
+      background-color: var(--ap-music-border-color);
+    }
+    &::after {
+      content: '';
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: var(--ap-music-border-color);
+    }
+  }
+}
