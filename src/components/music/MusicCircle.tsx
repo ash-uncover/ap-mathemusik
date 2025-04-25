@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import { MusicCircleNote } from './MusicCircleNote'
 
 export interface MusicCircleProperties {
-  notes: boolean[]
+  notes: (string | null)[]
   children?: ReactNode
 }
 export const MusicCircle = ({
@@ -26,7 +26,7 @@ export const MusicCircle = ({
       {notes.map((note, index) => (
         <MusicCircleNote
           key={`ap-music-circle-note-${index}`}
-          active={note}
+          note={note}
           position={index}
           period={notes.length}
         />

@@ -20,6 +20,7 @@ import 'lib/icons'
 import { store } from './store'
 import { App } from './components/App'
 import { CONFIG } from './config'
+import { AudioProvider } from './lib/audio/AudioProvider'
 
 let Router = BrowserRouter
 if (CONFIG.AP_MATHEMUSIK_ENVIRONMENT === 'github') {
@@ -31,12 +32,14 @@ const root = createRoot(containerRoot)
 
 root.render(
   <Router>
-    <Provider store={store}>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route path='*' element={<Navigate to='/' replace={true} />} />
-        </Route>
-      </Routes>
-    </Provider>
+    <AudioProvider>
+      <Provider store={store}>
+        <Routes>
+          <Route path='/' element={<App />}>
+            <Route path='*' element={<Navigate to='/' replace={true} />} />
+          </Route>
+        </Routes>
+      </Provider>
+    </AudioProvider>
   </Router>
 )

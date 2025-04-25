@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, useLocation } from 'react-router-dom'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
-import { DataSelectors } from '../store/data/data.selectors'
 import AppSelectors from '../store/app/app.selector'
 import { AppLoadStatuses } from '../store/app/app.state'
 
@@ -12,6 +11,9 @@ import { MusicClock } from './music/MusicClock'
 
 import './App.css'
 import { AppLoading } from './AppLoading'
+import { AudioProviderContext, AudioProviderDispatchContext } from '../lib/audio/AudioProvider'
+import { CONFIG } from '../config'
+import { useLoadAudio } from '../lib/audio/AudioHooks'
 
 export const App = () => {
 
@@ -21,6 +23,14 @@ export const App = () => {
   const location = useLocation()
   const [scrolling, setScrolling] = useState(false)
   const loadStatus = useSelector(AppSelectors.loadStatus)
+
+  const audioContext = useContext(AudioProviderContext)
+  const dispatch = useContext(AudioProviderDispatchContext)
+  useEffect(() => {
+    useLoadAudio(audioContext, dispatch, `${CONFIG.AP_MATHEMUSIK_PUBLIC}/sound/clap.mp3`, 'clap')
+    useLoadAudio(audioContext, dispatch, `${CONFIG.AP_MATHEMUSIK_PUBLIC}/sound/ball-tap.wav`, 'ball')
+  }, []);
+
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollTop = 0
@@ -60,10 +70,11 @@ export const App = () => {
       return (
         <div className={classes.join(' ')}>
           <MusicContainer>
-                <MusicCircle notes={[true, false, true, true, false]}>
-                  <MusicClock />
-                </MusicCircle>
-            
+            <MusicCircle notes={['clap', null, 'clap', 'clap', null]}>
+              <MusicCircle notes={[null, 'ball', 'ball', null, 'ball', 'ball', null, 'ball']}>
+                <MusicClock />
+              </MusicCircle>
+            </MusicCircle>
           </MusicContainer>
         </div>
       )

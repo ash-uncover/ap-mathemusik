@@ -1,48 +1,48 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useAudio } from '@sol.ac/games-common'
 
 import { DataSelectors } from '../../store/data/data.selectors'
-import { CONFIG } from '../../config'
+import { AudioProviderActions, AudioProviderContext, AudioProviderDispatchContext } from '../../lib/audio/AudioProvider'
 
 export interface MusicCircleNoteProperties {
-  active: boolean
+  note: string | null
   period: number
   position: number
 }
 export const MusicCircleNote = ({
-  active,
+  note,
   period,
   position
 }: MusicCircleNoteProperties) => {
 
   // #region Hooks
   const duration = useSelector(DataSelectors.duration)
-  const sound = useAudio([
-    `${CONFIG.AP_MATHEMUSIK_PUBLIC}/sound/clap.mp3`,
-  ])
   const [rotate, setRotate] = useState(0)
   const [delay, setDelay] = useState(0)
+  const audioContext = useContext(AudioProviderContext)
+  const dispatch = useContext(AudioProviderDispatchContext)
+  function sound() {
+    if (note) {
+      const action = AudioProviderActions.playAudio(note)
+      dispatch(action)
+    }
+  }
   useEffect(() => {
     setRotate(360 * position / period)
     const newDelay = duration * position / period
     setDelay(newDelay)
 
-    if (active) {
+    if (note) {
       console.log('delay', newDelay * 1000, 'period', period * 1000, 'duration', duration * 1000)
       setTimeout(() => {
-        console.log('sound')
-        sound.stop()
-        sound.play()
-      }, newDelay*1000)
+        sound()
+      }, newDelay * 1000)
       const soundInterval = setInterval(() => {
         setTimeout(() => {
-          console.log('sound')
-          sound.stop()
-          sound.play()
-        }, newDelay*1000)
-      }, duration*1000)
-  
+          sound()
+        }, newDelay * 1000)
+      }, duration * 1000)
+
       return () => clearInterval(soundInterval)
     }
   }, [duration])
@@ -53,7 +53,7 @@ export const MusicCircleNote = ({
 
   // #region Rendering
   const classes = ['ap-music-circle-inner']
-  if (active) {
+  if (note) {
     classes.push('ap-music-circle-inner--active')
   }
   return (
