@@ -20,11 +20,17 @@
 }
 
 .ap-music-container {
-  position: relative;
-  width: 500px;
-  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  & .ap-music-container_content {
+    position: relative;
+    width: 500px;
+    height: 500px;
+  }
 
-  .ap-music-circle {
+  & .ap-music-circle {
     position: absolute;
     top: calc(var(--ap-music-circle-size) + 0.25rem);
     bottom: calc(var(--ap-music-circle-size) + 0.25rem);

@@ -74,15 +74,7 @@ export const App = () => {
           <header className='ap-app-header'></header>
           <main className='ap-app-main'>
             <MusicPanelMain className='ap-app-side ap-app-side--left' />
-            <div className='ap-app-content'>
-              <MusicContainer>
-                <MusicCircle notes={['clap', null, 'clap', 'clap', null]}>
-                  <MusicCircle notes={[null, 'ball', 'ball', null, 'ball', 'ball', null, 'ball']}>
-                    <MusicClock />
-                  </MusicCircle>
-                </MusicCircle>
-              </MusicContainer>
-            </div>
+            <MusicContainer className='ap-app-content' />
             <MusicPanelDetails className='ap-app-side ap-app-side--right' />
           </main>
           <footer className='ap-app-footer'>ash-uncover 2025</footer>

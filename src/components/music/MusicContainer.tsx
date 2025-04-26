@@ -1,16 +1,19 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { MusicStates } from '../../lib/model'
+import { Circle, MusicStates } from '../../lib/model'
 import { DataSelectors } from '../../store/data/data.selectors'
+
+import { MusicClock } from './MusicClock'
+import { MusicCircle } from './MusicCircle'
 
 import './Music.css'
 
 export interface MusicContainerProperties {
-  children: ReactNode
+  className?: string
 }
 export const MusicContainer = ({
-  children
+  className
 }: MusicContainerProperties) => {
 
   // #region Hooks
@@ -19,10 +22,26 @@ export const MusicContainer = ({
   // #endregion
 
   // #region Callbacks
+  function renderCircles(cs: Circle[]) {
+    if (cs.length === 0) {
+      return (
+        <MusicClock />
+      )
+    }
+    const c = cs[0]
+    return (
+      <MusicCircle notes={c.notes}>
+        {renderCircles(cs.slice(1, cs.length))}
+      </MusicCircle>
+    )
+  }
   // #endregion
 
   // #region Rendering
   const classes = ['ap-music-container']
+  if (className) {
+    classes.push(className)
+  }
   if (musicState === MusicStates.PLAY) {
     classes.push('ap-music-container--play')
   }
@@ -31,7 +50,7 @@ export const MusicContainer = ({
       className={classes.join(' ')}
     >
       <div className='ap-music-container_content'>
-        {children}
+        {renderCircles(circles)}
       </div>
     </div>
   )
