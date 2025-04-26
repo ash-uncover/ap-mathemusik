@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
-import AppSelectors from '../store/app/app.selector'
+import { AppSelectors } from '../store/app/app.selector'
 import { AppLoadStatuses } from '../store/app/app.state'
 
 import { MusicCircle } from './music/MusicCircle'
@@ -14,6 +14,8 @@ import { AppLoading } from './AppLoading'
 import { AudioProviderContext, AudioProviderDispatchContext } from '../lib/audio/AudioProvider'
 import { CONFIG } from '../config'
 import { useLoadAudio } from '../lib/audio/AudioHooks'
+import { MusicPanelMain } from './panels/MusicPanelMain'
+import { MusicPanelDetails } from './panels/MusicPanelDetails'
 
 export const App = () => {
 
@@ -69,13 +71,21 @@ export const App = () => {
     case AppLoadStatuses.STARTED: {
       return (
         <div className={classes.join(' ')}>
-          <MusicContainer>
-            <MusicCircle notes={['clap', null, 'clap', 'clap', null]}>
-              <MusicCircle notes={[null, 'ball', 'ball', null, 'ball', 'ball', null, 'ball']}>
-                <MusicClock />
-              </MusicCircle>
-            </MusicCircle>
-          </MusicContainer>
+          <header className='ap-app-header'></header>
+          <main className='ap-app-main'>
+            <MusicPanelMain className='ap-app-side ap-app-side--left' />
+            <div className='ap-app-content'>
+              <MusicContainer>
+                <MusicCircle notes={['clap', null, 'clap', 'clap', null]}>
+                  <MusicCircle notes={[null, 'ball', 'ball', null, 'ball', 'ball', null, 'ball']}>
+                    <MusicClock />
+                  </MusicCircle>
+                </MusicCircle>
+              </MusicContainer>
+            </div>
+            <MusicPanelDetails className='ap-app-side ap-app-side--right' />
+          </main>
+          <footer className='ap-app-footer'>ash-uncover 2025</footer>
         </div>
       )
     }

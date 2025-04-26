@@ -1,17 +1,11 @@
 import React, { ReactNode } from 'react'
+import { useSelector } from 'react-redux'
+
+import { MusicStates } from '../../lib/model'
+import { DataSelectors } from '../../store/data/data.selectors'
 
 import './Music.css'
 
-export type MusicState =
-  | 'STOP'
-  | 'PLAY'
-export const MusicStates: {
-  STOP: MusicState
-  PLAY: MusicState
-} = {
-  STOP: 'STOP',
-  PLAY: 'PLAY',
-}
 export interface MusicContainerProperties {
   children: ReactNode
 }
@@ -20,22 +14,16 @@ export const MusicContainer = ({
 }: MusicContainerProperties) => {
 
   // #region Hooks
-  const [state, setState] = React.useState<MusicState>(MusicStates.STOP)
+  const musicState = useSelector(DataSelectors.musicState)
+  const circles = useSelector(DataSelectors.circles)
   // #endregion
 
   // #region Callbacks
-  function handleButtonPlayClick() {
-    if (state === MusicStates.STOP) {
-      setState(MusicStates.PLAY)
-    } else {
-      setState(MusicStates.STOP)
-    }
-  }
   // #endregion
 
   // #region Rendering
   const classes = ['ap-music-container']
-  if (state === MusicStates.PLAY) {
+  if (musicState === MusicStates.PLAY) {
     classes.push('ap-music-container--play')
   }
   return (
@@ -44,13 +32,6 @@ export const MusicContainer = ({
     >
       <div className='ap-music-container_content'>
         {children}
-      </div>
-      <div>
-        <button
-          onClick={handleButtonPlayClick}
-        >
-          {state === MusicStates.PLAY ? 'STOP' : 'PLAY'}
-          </button>
       </div>
     </div>
   )

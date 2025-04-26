@@ -50,26 +50,33 @@
     }
   }
 
-  & .ap-app-breadcrumbs {
-    flex-shrink: 0;
-    flex-grow: 0;
-  }
-
   & .ap-app-main {
     height: 0;
     flex-shrink: 1;
     flex-grow: 1;
 
-    overflow: auto;
-  }
+    overflow: hidden;
+    display: flex;
 
-  & .ap-app-nav {
-    flex-shrink: 0;
-    flex-grow: 0;
+    & .ap-app-side {
+      width: 250px;
+      flex-grow: 0;
+      background: #121225;
+    }
+    
+    & .ap-app-content {
+      width: 0;
+      flex-grow: 1;
+      flex-shrink: 1;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   & .ap-app-footer {
     flex-shrink: 0;
     flex-grow: 0;
+    background: #252545;
   }
 }

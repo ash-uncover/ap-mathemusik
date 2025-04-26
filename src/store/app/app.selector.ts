@@ -6,10 +6,8 @@ export const embedded = (state: RootState) => base(state).embedded
 export const language = (state: RootState) => base(state).language
 export const loadStatus = (state: RootState) => base(state).loadStatus
 
-const AppSelectors = {
+export const AppSelectors = {
   embedded,
   language,
   loadStatus,
 }
-
-export default AppSelectors

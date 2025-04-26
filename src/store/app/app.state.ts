@@ -1,3 +1,5 @@
+import { MusicState } from '../../lib/model'
+
 export type AppLoadStatus =
   'NONE' |
   'LOADING' |
