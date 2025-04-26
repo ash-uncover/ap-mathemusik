@@ -1,0 +1,13 @@
+.ap-music-panel-main-circle {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+
+  &.ap-music-panel-main-circle--hover {
+    color: red;
+  }
+}

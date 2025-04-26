@@ -11,7 +11,9 @@ const initialState: DataModel = {
   circles: [
     { key: 'a', notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }] },
     { key: 'b', notes: [{ sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }] }
-  ]
+  ],
+  circleHovered: null,
+  circleHoveredLast: null,
 }
 // #endregion
 
@@ -30,6 +32,15 @@ const deleteCircle: CaseReducer<DataModel, PayloadAction<number>> = (state, acti
 const setMusicState: CaseReducer<DataModel, PayloadAction<MusicState>> = (state, action) => {
   state.musicState = action.payload
 }
+const enterCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
+  state.circleHovered = action.payload
+  state.circleHoveredLast = action.payload
+}
+const leaveCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
+  if (state.circleHovered === action.payload) {
+    state.circleHovered = null
+  }
+}
 // #endregion
 
 export const DataSlice = createSlice({
@@ -39,6 +50,9 @@ export const DataSlice = createSlice({
     addCircle,
     deleteCircle,
     setMusicState,
+
+    enterCircle,
+    leaveCircle,
   },
 })
 

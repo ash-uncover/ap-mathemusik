@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MusicStates } from '../../lib/model'
 import { DataSelectors } from '../../store/data/data.selectors'
 import { DataSlice } from '../../store/data/data.slice'
+import { MusicPanelMainCircle } from './MusicPanelMainCircle'
 
 export interface MusicPanelMainProperties {
   className: string
@@ -38,13 +39,19 @@ export const MusicPanelMain = ({
     >
       <div>
         <h4>Circles</h4>
-        <button onClick={handleButtonAddClick}>
+        <button 
+          onClick={handleButtonAddClick}
+          disabled={musicState === MusicStates.PLAY}
+        >
           +
         </button>
         <ul>
           {circles.map((circle, index) => {
             return (
-              <li>{`Circle n°${index + 1}`} <button onClick={() => handleButtonDeleteCircleClick(index)}>X</button></li>
+              <MusicPanelMainCircle 
+                key={circle.key}
+                index={index} 
+              />
             )
           })}
         </ul>
