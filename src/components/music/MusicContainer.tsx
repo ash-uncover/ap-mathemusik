@@ -19,6 +19,7 @@ export const MusicContainer = ({
 
   // #region Hooks
   const dispatch = useDispatch()
+  const duration = useSelector(DataSelectors.duration)
   const musicState = useSelector(DataSelectors.musicState)
   const circles = useSelector(DataSelectors.circles)
   // #endregion
@@ -57,6 +58,10 @@ export const MusicContainer = ({
   return (
     <div
       className={classes.join(' ')}
+      style={{
+        // @ts-ignore
+        '--ap-music-period': `${duration}s`
+      }}
     >
       <div className='ap-music-container_content'>
         {renderCircles(circles)}

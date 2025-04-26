@@ -18,6 +18,9 @@ const initialState: DataModel = {
 // #endregion
 
 // #region Reducers
+const setDuration: CaseReducer<DataModel, PayloadAction<number>> = (state, action) => {
+  state.duration = action.payload
+}
 const addCircle: CaseReducer<DataModel, PayloadAction<void>> = (state, action) => {
   state.circles = [
     { key: UUID.next(), notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: null }] },
@@ -25,7 +28,6 @@ const addCircle: CaseReducer<DataModel, PayloadAction<void>> = (state, action) =
   ]
 }
 const deleteCircle: CaseReducer<DataModel, PayloadAction<number>> = (state, action) => {
-  console.log(action.payload)
   const newCircles = state.circles.filter((c, i) => i !== action.payload)
   state.circles = newCircles
 }
@@ -47,6 +49,8 @@ export const DataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
+    setDuration,
+
     addCircle,
     deleteCircle,
     setMusicState,
