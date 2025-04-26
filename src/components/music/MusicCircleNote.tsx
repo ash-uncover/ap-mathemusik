@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import { AudioProviderActions, AudioProviderDispatchContext } from '../../lib/audio/AudioProvider'
+
 import { DataSelectors } from '../../store/data/data.selectors'
-import { AudioProviderActions, AudioProviderContext, AudioProviderDispatchContext } from '../../lib/audio/AudioProvider'
+import { MusicStates } from '../../lib/model'
 
 export interface MusicCircleNoteProperties {
   note: string | null
@@ -19,7 +21,7 @@ export const MusicCircleNote = ({
   const duration = useSelector(DataSelectors.duration)
   const [rotate, setRotate] = useState(0)
   const [delay, setDelay] = useState(0)
-  const audioContext = useContext(AudioProviderContext)
+  const musicState = useSelector(DataSelectors.musicState)
   const dispatch = useContext(AudioProviderDispatchContext)
   function sound() {
     if (note) {
@@ -32,20 +34,23 @@ export const MusicCircleNote = ({
     const newDelay = duration * position / period
     setDelay(newDelay)
 
-    if (note) {
+    if (note && musicState === MusicStates.PLAY) {
       console.log('delay', newDelay * 1000, 'period', period * 1000, 'duration', duration * 1000)
-      setTimeout(() => {
+      let soundTimeout = setTimeout(() => {
         sound()
       }, newDelay * 1000)
       const soundInterval = setInterval(() => {
-        setTimeout(() => {
+        soundTimeout = setTimeout(() => {
           sound()
         }, newDelay * 1000)
       }, duration * 1000)
 
-      return () => clearInterval(soundInterval)
+      return () => {
+        clearTimeout(soundTimeout)
+        clearInterval(soundInterval)
+      }
     }
-  }, [duration])
+  }, [duration, musicState])
   // #endregion
 
   // #region Callbacks

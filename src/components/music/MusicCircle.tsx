@@ -4,10 +4,12 @@ import { MusicCircleNote } from './MusicCircleNote'
 import { Note } from '../../lib/model'
 
 export interface MusicCircleProperties {
+  circleKey: string
   notes: Note[]
   children?: ReactNode
 }
 export const MusicCircle = ({
+  circleKey,
   notes,
   children
 }: MusicCircleProperties) => {
@@ -26,7 +28,7 @@ export const MusicCircle = ({
     >
       {notes.map((note, index) => (
         <MusicCircleNote
-          key={`ap-music-circle-note-${index}`}
+          key={`ap-music-circle-note-${circleKey}-${index}`}
           note={note.sound}
           position={index}
           period={notes.length}

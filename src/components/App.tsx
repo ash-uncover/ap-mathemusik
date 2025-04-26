@@ -14,8 +14,8 @@ import { AppLoading } from './AppLoading'
 import { AudioProviderContext, AudioProviderDispatchContext } from '../lib/audio/AudioProvider'
 import { CONFIG } from '../config'
 import { useLoadAudio } from '../lib/audio/AudioHooks'
-import { MusicPanelMain } from './panels/MusicPanelMain'
-import { MusicPanelDetails } from './panels/MusicPanelDetails'
+import { MusicPanelMain } from './panelmain/MusicPanelMain'
+import { MusicPanelDetails } from './paneldetails/MusicPanelDetails'
 
 export const App = () => {
 

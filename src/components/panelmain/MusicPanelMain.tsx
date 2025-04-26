@@ -15,15 +15,15 @@ export const MusicPanelMain = ({
   // #region Hooks
   const dispatch = useDispatch()
   const musicState = useSelector(DataSelectors.musicState)
+  const circles = useSelector(DataSelectors.circles)
   // #endregion
 
   // #region Callbacks
-  function handleButtonPlayClick() {
-    if (musicState === MusicStates.STOP) {
-      dispatch(DataSlice.actions.setMusicState(MusicStates.PLAY))
-    } else {
-      dispatch(DataSlice.actions.setMusicState(MusicStates.STOP))
-    }
+  function handleButtonAddClick() {
+    dispatch(DataSlice.actions.addCircle())
+  }
+  function handleButtonDeleteCircleClick(index: number) {
+    dispatch(DataSlice.actions.deleteCircle(index))
   }
   // #endregion
 
@@ -36,9 +36,20 @@ export const MusicPanelMain = ({
     <div
       className={classes.join(' ')}
     >
-      <button onClick={handleButtonPlayClick}>
-        {musicState === MusicStates.PLAY ? MusicStates.STOP : MusicStates.PLAY}
-      </button>
+      <div>
+        <h4>Circles</h4>
+        <button onClick={handleButtonAddClick}>
+          +
+        </button>
+        <ul>
+          {circles.map((circle, index) => {
+            return (
+              <li>{`Circle n°${index + 1}`} <button onClick={() => handleButtonDeleteCircleClick(index)}>X</button></li>
+            )
+          })}
+        </ul>
+      </div>
+
     </div>
   )
   // #endregion

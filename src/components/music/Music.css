@@ -1,4 +1,6 @@
 :root {
+  --ap-music-background: white;
+
   --ap-music-circle-size: 2rem;
   --ap-music-border-color: grey;
   --ap-music-note-color: black;
@@ -23,85 +25,126 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   
   & .ap-music-container_content {
     position: relative;
     width: 500px;
     height: 500px;
-  }
-
-  & .ap-music-circle {
-    position: absolute;
-    top: calc(var(--ap-music-circle-size) + 0.25rem);
-    bottom: calc(var(--ap-music-circle-size) + 0.25rem);
-    left: calc(var(--ap-music-circle-size) + 0.25rem);
-    right: calc(var(--ap-music-circle-size) + 0.25rem);
-
-    border-radius: 50%;
-    border: 2px solid var(--ap-music-border-color);
-    background: transparent;
-
-    .ap-music-circle-inner {
+    & .ap-music-circle {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      pointer-events: none;
-      cursor: grab;
-
-      .ap-music-circle-inner-note {
-        position: absolute;
-        top: calc(var(--ap-music-circle-size) / -2);
-        left: calc(50% + var(--ap-music-circle-size) / -2);
-        pointer-events: all;
-        width: var(--ap-music-circle-size);
-        aspect-ratio: 1;
-        border-radius: 50%;
-        border: 2px solid var(--ap-music-border-color);
-        background: var(--ap-music-note-color);
-        box-sizing: border-box;
+      top: calc(var(--ap-music-circle-size) + 0.25rem);
+      bottom: calc(var(--ap-music-circle-size) + 0.25rem);
+      left: calc(var(--ap-music-circle-size) + 0.25rem);
+      right: calc(var(--ap-music-circle-size) + 0.25rem);
+  
+      border-radius: 50%;
+      border: 2px solid var(--ap-music-border-color);
+      background: var(--ap-music-background);
+      cursor: pointer;
+      &:hover:not(:has(.ap-music-circle:hover)) {
+        background: rgba(255, 0, 0, 0.2)
       }
-
-      &.ap-music-circle-inner--active {
+  
+      .ap-music-circle-inner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        pointer-events: none;
+        cursor: grab;
+  
         .ap-music-circle-inner-note {
-          background-color: var(--ap-music-note-color--active);
-          transition: background-color calc(var(--ap-music-period) / 4);
-          animation: var(--ap-music-period) linear var(--ap-music-delay) infinite play;
+          position: absolute;
+          top: calc(var(--ap-music-circle-size) / -2);
+          left: calc(50% + var(--ap-music-circle-size) / -2);
+          pointer-events: all;
+          width: var(--ap-music-circle-size);
+          aspect-ratio: 1;
+          border-radius: 50%;
+          border: 2px solid var(--ap-music-border-color);
+          background: var(--ap-music-note-color);
+          box-sizing: border-box;
+        }
+  
+        &.ap-music-circle-inner--active {
+          .ap-music-circle-inner-note {
+            background-color: var(--ap-music-note-color--active);
+            transition: background-color calc(var(--ap-music-period) / 4);
+          }
         }
       }
     }
+  
+    .ap-music-clock {
+      position: absolute;
+      top: var(--ap-music-circle-size);
+      bottom: var(--ap-music-circle-size);
+      left: var(--ap-music-circle-size);
+      right: var(--ap-music-circle-size);
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      border-radius: 50%;
+  
+      background-color: var(--ap-music-background);
+  
+      .ap-music-clock-inner {
+        position: absolute;
+        top: 0;
+        bottom: 50%;
+        left: calc(50% - 1px);
+        width: 3px;
+        background-color: var(--ap-music-border-color);
+      }
+      &::after {
+        content: '';
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: var(--ap-music-border-color);
+      }
+    }
   }
 
-  .ap-music-clock {
-    position: absolute;
-    top: var(--ap-music-circle-size);
-    bottom: var(--ap-music-circle-size);
-    left: var(--ap-music-circle-size);
-    right: var(--ap-music-circle-size);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    animation: var(--ap-music-period) linear var(--ap-music-delay) infinite rotate;
-
-    .ap-music-clock-inner {
-      position: absolute;
-      top: 0;
-      bottom: 50%;
-      left: calc(50% - 1px);
-      width: 3px;
-      background-color: var(--ap-music-border-color);
+  & .ap-music-container_button-play {
+    width: 300px;
+    height: 2.5rem;
+    background-color: green;
+    border: 0;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &:hover {
+      background-color: lightgreen;
     }
-    &::after {
-      content: '';
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background-color: var(--ap-music-border-color);
+  }
+
+  &.ap-music-container--play {
+    & .ap-music-container_content {
+      & .ap-music-circle {       
+        .ap-music-circle-inner {  
+          &.ap-music-circle-inner--active {
+            .ap-music-circle-inner-note {
+              animation: var(--ap-music-period) linear var(--ap-music-delay) infinite play;
+            }
+          }
+        }
+      }
+    
+      .ap-music-clock {
+        animation: var(--ap-music-period) linear var(--ap-music-delay) infinite rotate;
+      }
+    }
+
+    & .ap-music-container_button-play {
+      background: red;
+      &:hover {
+        background-color: tomato;
+      }
     }
   }
 }
