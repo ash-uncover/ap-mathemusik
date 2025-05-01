@@ -13,6 +13,7 @@ export const MusicStates: {
 
 export interface Circle {
   key: string
+  rotate: number
   notes: Note[]
 }
 export interface Note {

@@ -9,8 +9,8 @@ const initialState: DataModel = {
   musicState: MusicStates.STOP,
   duration: 2,
   circles: [
-    { key: 'a', notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }] },
-    { key: 'b', notes: [{ sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }] }
+    { key: 'a', rotate: 0, notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }] },
+    { key: 'b', rotate: 0, notes: [{ sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }] }
   ],
   circleHovered: null,
   circleDraging: null,
@@ -24,9 +24,25 @@ const setDuration: CaseReducer<DataModel, PayloadAction<number>> = (state, actio
 }
 const addCircle: CaseReducer<DataModel, PayloadAction<void>> = (state, action) => {
   state.circles = [
-    { key: UUID.next(), notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: null }] },
+    { key: UUID.next(), rotate: 0, notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: null }] },
     ...state.circles
   ]
+}
+export interface CircleRotatePayload {
+  key: string
+  rotate: number
+}
+const updateCircleRotate: CaseReducer<DataModel, PayloadAction<CircleRotatePayload>> = (state, action) => {
+  const circleIndex = state.circles.findIndex(c => c.key === action.payload.key)
+  if (circleIndex > -1) {
+    const circle = {
+      ...state.circles[circleIndex],
+      rotate: action.payload.rotate
+    }
+    const circles = [...state.circles]
+    circles[circleIndex] = circle
+    state.circles = circles
+  }
 }
 const deleteCircle: CaseReducer<DataModel, PayloadAction<number>> = (state, action) => {
   const newCircles = state.circles.filter((c, i) => i !== action.payload)
@@ -59,6 +75,7 @@ export const DataSlice = createSlice({
     setDuration,
 
     addCircle,
+    updateCircleRotate,
     deleteCircle,
     setMusicState,
 

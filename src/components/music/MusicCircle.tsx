@@ -22,10 +22,10 @@ export const MusicCircle = ({
 }: MusicCircleProperties) => {
 
   // #region Hooks
-  const [rotate, setRotate] = useState(0)
   const dispatch = useDispatch()
   const circleHovered = useSelector(DataSelectors.circleHovered)
   const circleDraging = useSelector(DataSelectors.circleDraging)
+  const circle = useSelector(DataSelectors.circleByKey(circleKey))
   const musicState = useSelector(DataSelectors.musicState)
   const ref = useRef(null)
   useEffect(() => {
@@ -46,10 +46,8 @@ export const MusicCircle = ({
   function handleDocumentMouseMove(e: React.MouseEvent<HTMLElement>) {
     const center = getRefCenter(ref.current)
     const angle = getAngleDegree(center, { x: e.clientX, y: e.clientY })
-    const rotate = (360 + angle - circleDraging.initialAngle) % 360
-    console.log('mouse move', rotate)
-    setRotate(rotate)
-    e.stopPropagation()
+    const rotate = (360 + angle - circleDraging.initialAngle + circle.rotate) % 360
+    dispatch(DataSlice.actions.updateCircleRotate({ key: circleKey, rotate }))
   }
   function handleDocumentMouseUp(e: React.MouseEvent<HTMLElement>) {
     e.stopPropagation()
@@ -71,7 +69,7 @@ export const MusicCircle = ({
     if (musicState !== MusicStates.PLAY) {
       e.stopPropagation()
       const center = getRefCenter(ref.current)
-      const angle = getAngle(center, { x: e.clientX, y: e.clientY })
+      const angle = getAngleDegree(center, { x: e.clientX, y: e.clientY })
       dispatch(DataSlice.actions.dragCircleStart({
         key: circleKey,
         initialAngle: angle
@@ -97,7 +95,7 @@ export const MusicCircle = ({
       <div
         className='ap-music-circle_inner'
         style={{
-          rotate: `${rotate}deg`
+          rotate: `${circle.rotate}deg`
         }}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
