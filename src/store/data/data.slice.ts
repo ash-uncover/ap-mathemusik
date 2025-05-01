@@ -1,7 +1,7 @@
 import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UUID } from '@sol.ac/js-utils'
 
-import { DataModel } from './data.state'
+import { CircleDragModel, DataModel } from './data.state'
 import { MusicState, MusicStates } from '../../lib/model'
 
 // #region Initial State
@@ -13,7 +13,8 @@ const initialState: DataModel = {
     { key: 'b', notes: [{ sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }] }
   ],
   circleHovered: null,
-  circleHoveredLast: null,
+  circleDraging: null,
+  circleSelected: null,
 }
 // #endregion
 
@@ -36,12 +37,18 @@ const setMusicState: CaseReducer<DataModel, PayloadAction<MusicState>> = (state,
 }
 const enterCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
   state.circleHovered = action.payload
-  state.circleHoveredLast = action.payload
 }
 const leaveCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
   if (state.circleHovered === action.payload) {
     state.circleHovered = null
   }
+}
+const dragCircleStart: CaseReducer<DataModel, PayloadAction<CircleDragModel>> = (state, action) => {
+  state.circleDraging = action.payload
+  state.circleSelected = action.payload.key
+}
+const dragCircleStop: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
+  state.circleDraging = null
 }
 // #endregion
 
@@ -57,6 +64,8 @@ export const DataSlice = createSlice({
 
     enterCircle,
     leaveCircle,
+    dragCircleStart,
+    dragCircleStop,
   },
 })
 

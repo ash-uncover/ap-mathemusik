@@ -1,6 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DataSlice } from '../../store/data/data.slice'
+import { DataSelectors } from '../../store/data/data.selectors'
 
 export interface MusicClockProperties {
 }
@@ -9,12 +10,15 @@ export const MusicClock = ({
 
   // #region Hooks
   const dispatch = useDispatch()
+  const circleDraging = useSelector(DataSelectors.circleDraging)
   // #endregion
 
   // #region Callbacks
   function handleMouseOver(e: React.MouseEvent<HTMLElement>) {
     e.stopPropagation()
-    dispatch(DataSlice.actions.enterCircle(null))
+    if (!circleDraging) {
+      dispatch(DataSlice.actions.enterCircle(null))
+    }
   }
   // #endregion
 

@@ -1,0 +1,54 @@
+.ap-music-circle {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  
+  &.ap-music-circle--hover {
+    &>.ap-music-circle_inner {
+      background: rgba(255, 0, 0, 0.2);
+      &>.ap-music-circle_notes {
+        border-color: var(--ap-music-border-color--hover);
+        &>.ap-music-circle-note {
+          &>.ap-music-circle-note-inner {
+            border-color: var(--ap-music-border-color--hover);
+          }
+        }
+      }
+    }
+  }
+
+  &>.ap-music-circle_inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+    background: var(--ap-music-background);
+
+    &>.ap-music-circle_notes {
+      position: absolute;
+      top: calc(var(--ap-music-circle-size) / 2);
+      bottom: calc(var(--ap-music-circle-size) / 2);
+      left: calc(var(--ap-music-circle-size) / 2);
+      right: calc(var(--ap-music-circle-size) / 2);
+
+      border-radius: 50%;
+      border: 2px solid var(--ap-music-border-color);
+    }
+  }
+
+  &>.ap-music-circle_children {
+    position: absolute;
+    border-radius: 50%;
+    top: calc(var(--ap-music-circle-size) + 0.25rem);
+    bottom: calc(var(--ap-music-circle-size) + 0.25rem);
+    left: calc(var(--ap-music-circle-size) + 0.25rem);
+    right: calc(var(--ap-music-circle-size) + 0.25rem);
+  }
+}

@@ -47,60 +47,7 @@
     width: 500px;
     height: 500px;
 
-    & .ap-music-circle {
-      position: absolute;
-      top: calc(var(--ap-music-circle-size) + 0.25rem);
-      bottom: calc(var(--ap-music-circle-size) + 0.25rem);
-      left: calc(var(--ap-music-circle-size) + 0.25rem);
-      right: calc(var(--ap-music-circle-size) + 0.25rem);
-
-      border-radius: 50%;
-      border: 2px solid var(--ap-music-border-color);
-      background: var(--ap-music-background);
-      cursor: pointer;
-
-      &.ap-music-circle--hover {
-        background: rgba(255, 0, 0, 0.2);
-        border-color: var(--ap-music-border-color--hover);
-        & > .ap-music-circle-inner {
-          & > .ap-music-circle-inner-note {
-            border-color: var(--ap-music-border-color--hover);
-          }
-        }
-      }
-
-      & > .ap-music-circle-inner {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        pointer-events: none;
-        cursor: grab;
-
-        & > .ap-music-circle-inner-note {
-          position: absolute;
-          top: calc(var(--ap-music-circle-size) / -2);
-          left: calc(50% + var(--ap-music-circle-size) / -2);
-          pointer-events: all;
-          width: var(--ap-music-circle-size);
-          aspect-ratio: 1;
-          border-radius: 50%;
-          border: 2px solid var(--ap-music-border-color);
-          background: var(--ap-music-note-color);
-          box-sizing: border-box;
-        }
-
-        &.ap-music-circle-inner--active {
-          & > .ap-music-circle-inner-note {
-            background-color: var(--ap-music-note-color--active);
-            transition: background-color calc(var(--ap-music-period) / 4);
-          }
-        }
-      }
-    }
-
-    .ap-music-clock {
+    & .ap-music-clock {
       position: absolute;
       top: var(--ap-music-circle-size);
       bottom: var(--ap-music-circle-size);
@@ -115,7 +62,7 @@
 
       background-color: var(--ap-music-background);
 
-      & > .ap-music-clock-inner {
+      &>.ap-music-clock-inner {
         position: absolute;
         top: 0;
         bottom: 50%;
@@ -149,12 +96,16 @@
   }
 
   &.ap-music-container--play {
-    & > .ap-music-container_content {
+    &>.ap-music-container_content {
       & .ap-music-circle {
-        & > .ap-music-circle-inner {
-          &.ap-music-circle-inner--active {
-            & > .ap-music-circle-inner-note {
-              animation: var(--ap-music-period) linear var(--ap-music-delay) infinite play;
+        &>.ap-music-circle_inner {
+          &>.ap-music-circle_notes {
+            &>.ap-music-circle-note {
+              &.ap-music-circle-note--active {
+                &>.ap-music-circle-note-inner {
+                  animation: var(--ap-music-period) linear var(--ap-music-delay) infinite play;
+                }
+              }
             }
           }
         }

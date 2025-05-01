@@ -46,13 +46,6 @@ export const AppLoading = ({
   // #region Events
   const handleClick = () => {
     if (loadCompleted) {
-      var audio = new Audio(`${CONFIG.AP_MATHEMUSIK_PUBLIC}/sound/clap.mp3`);
-      setInterval(() => {
-        setTimeout(() => {
-          console.log('play')
-          // audio.play()
-        }, 0) 
-      }, 100)
       dispatch(AppSlice.actions.setLoadStatus(AppLoadStatuses.STARTED))
     }
   }

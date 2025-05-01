@@ -10,6 +10,7 @@ export const circles = (state: RootState) => base(state).circles
 export const circleByKey = (key: string) => (state: RootState) => base(state).circles.find(c => c.key === key)
 export const circleByIndex = (index: number) => (state: RootState) => base(state).circles[index]
 export const circleHovered = (state: RootState) => base(state).circleHovered
+export const circleDraging = (state: RootState) => base(state).circleDraging
 
 export const DataSelectors = {
   musicState,
@@ -18,4 +19,5 @@ export const DataSelectors = {
   circleByIndex,
   circleByKey,
   circleHovered,
+  circleDraging,
 }

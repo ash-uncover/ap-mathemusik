@@ -22,7 +22,7 @@ export const MusicPanelMain = ({
 
   // #region Callbacks
   function handleInputDurationChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = !Number.isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : null;
+    const value = !Number.isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : 0;
     dispatch(DataSlice.actions.setDuration(value))
   }
   function handleButtonAddClick() {

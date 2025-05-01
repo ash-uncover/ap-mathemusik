@@ -6,6 +6,8 @@ import { AudioProviderActions, AudioProviderDispatchContext } from '../../lib/au
 import { DataSelectors } from '../../store/data/data.selectors'
 import { MusicStates } from '../../lib/model'
 
+import './MusicCircleNote.css'
+
 export interface MusicCircleNoteProperties {
   note: string | null
   period: number
@@ -57,9 +59,9 @@ export const MusicCircleNote = ({
   // #endregion
 
   // #region Rendering
-  const classes = ['ap-music-circle-inner']
+  const classes = ['ap-music-circle-note']
   if (note) {
-    classes.push('ap-music-circle-inner--active')
+    classes.push('ap-music-circle-note--active')
   }
   return (
     <div
@@ -70,7 +72,7 @@ export const MusicCircleNote = ({
         '--ap-music-delay': `${delay}s`
       }}
     >
-      <div className='ap-music-circle-inner-note'>
+      <div className='ap-music-circle-note-inner'>
       </div>
     </div>
   )

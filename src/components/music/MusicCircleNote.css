@@ -1,0 +1,29 @@
+.ap-music-circle-note {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none;
+  cursor: grab;
+
+  &>.ap-music-circle-note-inner {
+    position: absolute;
+    top: calc(var(--ap-music-circle-size) / -2);
+    left: calc(50% + var(--ap-music-circle-size) / -2);
+    pointer-events: all;
+    width: var(--ap-music-circle-size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--ap-music-border-color);
+    background: var(--ap-music-note-color);
+    box-sizing: border-box;
+  }
+
+  &.ap-music-circle-note--active {
+    &>.ap-music-circle-note-inner {
+      background-color: var(--ap-music-note-color--active);
+      transition: background-color calc(var(--ap-music-period) / 4);
+    }
+  }
+}
