@@ -26,6 +26,7 @@ export const MusicCircleNote = ({
   const [rotate, setRotate] = useState(0)
   const [delay, setDelay] = useState(0)
   const musicState = useSelector(DataSelectors.musicState)
+  const circleDraging = useSelector(DataSelectors.circleDraging)
   const circle = useSelector(DataSelectors.circleByKey(circleKey))
   const dispatch = useContext(AudioProviderDispatchContext)
   function sound() {
@@ -36,18 +37,23 @@ export const MusicCircleNote = ({
   }
   useEffect(() => {
     setRotate(360 * position / period)
-    const newDelay = duration * position / period + (circle.rotate * duration / 360)
-    setDelay(newDelay)
-
-    if (note && musicState === MusicStates.PLAY) {
+  }, [position, period])
+  useEffect(() => {
+    if (!circleDraging) {
+      const newDelay = (duration * position / period + (circle.rotate * duration / 360)) % duration
       console.log('delay', newDelay * 1000, 'period', period * 1000, 'duration', duration * 1000)
+      setDelay(newDelay)
+    }
+  }, [duration, position, period, circle, circleDraging])
+  useEffect(() => {
+    if (note && musicState === MusicStates.PLAY) {
       let soundTimeout = setTimeout(() => {
         sound()
-      }, newDelay * 1000)
+      }, delay * 1000)
       const soundInterval = setInterval(() => {
         soundTimeout = setTimeout(() => {
           sound()
-        }, newDelay * 1000)
+        }, delay * 1000)
       }, duration * 1000)
 
       return () => {
@@ -55,7 +61,7 @@ export const MusicCircleNote = ({
         clearInterval(soundInterval)
       }
     }
-  }, [duration, musicState, circle])
+  }, [delay, musicState, note, duration])
   // #endregion
 
   // #region Callbacks

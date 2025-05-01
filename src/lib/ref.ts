@@ -2,7 +2,6 @@
 export const getRefCenter = (ref: HTMLElement) => {
   if (ref) {
     const rect = ref.getBoundingClientRect()
-    console.log(rect)
     const x = rect.x + rect.width/2
     const y = rect.y + rect.height/2
     return { x, y }

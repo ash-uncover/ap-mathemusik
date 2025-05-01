@@ -6,7 +6,7 @@ import { MusicStates, Note } from '../../lib/model'
 import { DataSelectors } from '../../store/data/data.selectors'
 import { DataSlice } from '../../store/data/data.slice'
 import { getRefCenter } from '../../lib/ref'
-import { getAngle, getAngleDegree } from '../../lib/geometric'
+import { getAngleDegree } from '../../lib/geometric'
 
 import './MusicCircle.css'
 
