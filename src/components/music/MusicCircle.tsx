@@ -107,6 +107,7 @@ export const MusicCircle = ({
           {notes.map((note, index) => (
             <MusicCircleNote
               key={`ap-music-circle-note-${circleKey}-${index}`}
+              circleKey={circleKey}
               note={note.sound}
               position={index}
               period={notes.length}

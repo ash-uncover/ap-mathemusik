@@ -9,11 +9,13 @@ import { MusicStates } from '../../lib/model'
 import './MusicCircleNote.css'
 
 export interface MusicCircleNoteProperties {
+  circleKey: string
   note: string | null
   period: number
   position: number
 }
 export const MusicCircleNote = ({
+  circleKey,
   note,
   period,
   position
@@ -24,6 +26,7 @@ export const MusicCircleNote = ({
   const [rotate, setRotate] = useState(0)
   const [delay, setDelay] = useState(0)
   const musicState = useSelector(DataSelectors.musicState)
+  const circle = useSelector(DataSelectors.circleByKey(circleKey))
   const dispatch = useContext(AudioProviderDispatchContext)
   function sound() {
     if (note) {
@@ -33,7 +36,7 @@ export const MusicCircleNote = ({
   }
   useEffect(() => {
     setRotate(360 * position / period)
-    const newDelay = duration * position / period
+    const newDelay = duration * position / period + (circle.rotate * duration / 360)
     setDelay(newDelay)
 
     if (note && musicState === MusicStates.PLAY) {
@@ -52,7 +55,7 @@ export const MusicCircleNote = ({
         clearInterval(soundInterval)
       }
     }
-  }, [duration, musicState])
+  }, [duration, musicState, circle])
   // #endregion
 
   // #region Callbacks
