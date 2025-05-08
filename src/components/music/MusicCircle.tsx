@@ -23,11 +23,36 @@ export const MusicCircle = ({
 
   // #region Hooks
   const dispatch = useDispatch()
+  const [selected, setSelected] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [dragging, setDragging] = useState(false)
   const circleHovered = useSelector(DataSelectors.circleHovered)
+  const circleSelected = useSelector(DataSelectors.circleSelected)
   const circleDraging = useSelector(DataSelectors.circleDraging)
   const circle = useSelector(DataSelectors.circleByKey(circleKey))
   const musicState = useSelector(DataSelectors.musicState)
   const ref = useRef(null)
+  useEffect(() => {
+    if (musicState !== MusicStates.PLAY && circleSelected !== circleKey && circleHovered === circleKey && !hovered) {
+      setHovered(true)
+    } else if (hovered) {
+      setHovered(false)
+    }
+  }, [circleSelected, circleHovered, musicState])
+  useEffect(() => {
+    if (musicState !== MusicStates.PLAY && circleSelected === circleKey && !selected) {
+      setSelected(true)
+    } else if (selected) {
+      setSelected(false)
+    }
+  }, [circleSelected, musicState])
+  useEffect(() => {
+    if (musicState !== MusicStates.PLAY && circleDraging?.key === circleKey && !dragging) {
+      setDragging(true)
+    } else if (dragging) {
+      setDragging(false)
+    }
+  }, [circleDraging, musicState])
   useEffect(() => {
     if (circleDraging?.key === circleKey) {
       const _handleDocumentMouseMove = handleDocumentMouseMove.bind(this)
@@ -80,10 +105,13 @@ export const MusicCircle = ({
 
   // #region Rendering
   const classes = ['ap-music-circle']
-  if (circleHovered === circleKey) {
+  if (hovered) {
     classes.push('ap-music-circle--hover')
   }
-  if (circleDraging?.key === circleKey) {
+  if (selected) {
+    classes.push('ap-music-circle--selected')
+  }
+  if (dragging) {
     classes.push('ap-music-circle--dragging')
   }
   return (

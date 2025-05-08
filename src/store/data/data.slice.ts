@@ -9,8 +9,8 @@ const initialState: DataModel = {
   musicState: MusicStates.STOP,
   duration: 2,
   circles: [
-    { key: 'a', rotate: 0, notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }] },
-    { key: 'b', rotate: 0, notes: [{ sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }, { sound: 'ball' }, { sound: null }, { sound: 'ball' }] }
+    { key: 'a', defaultNote: 'clap', rotate: 0, notes: [{ sound: 'clap' }, { sound: 'null' }, { sound: 'clap' }, { sound: 'clap' }, { sound: 'null' }] },
+    { key: 'b', defaultNote: 'ball', rotate: 0, notes: [{ sound: 'null' }, { sound: 'ball' }, { sound: 'ball' }, { sound: 'null' }, { sound: 'ball' }, { sound: 'ball' }, { sound: 'null' }, { sound: 'ball' }] }
   ],
   circleHovered: null,
   circleDraging: null,
@@ -24,7 +24,7 @@ const setDuration: CaseReducer<DataModel, PayloadAction<number>> = (state, actio
 }
 const addCircle: CaseReducer<DataModel, PayloadAction<void>> = (state, action) => {
   state.circles = [
-    { key: UUID.next(), rotate: 0, notes: [{ sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: 'clap' }, { sound: null }, { sound: 'clap' }, { sound: null }] },
+    { key: UUID.next(), defaultNote: 'clap', rotate: 0, notes: [{ sound: 'clap' }, { sound: 'null' }, { sound: 'clap' }, { sound: 'clap' }, { sound: 'null' }, { sound: 'clap' }, { sound: 'null' }] },
     ...state.circles
   ]
 }
@@ -50,6 +50,9 @@ const deleteCircle: CaseReducer<DataModel, PayloadAction<number>> = (state, acti
 }
 const setMusicState: CaseReducer<DataModel, PayloadAction<MusicState>> = (state, action) => {
   state.musicState = action.payload
+}
+const selectCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
+  state.circleSelected = action.payload
 }
 const enterCircle: CaseReducer<DataModel, PayloadAction<string>> = (state, action) => {
   state.circleHovered = action.payload
@@ -81,6 +84,7 @@ export const DataSlice = createSlice({
 
     enterCircle,
     leaveCircle,
+    selectCircle,
     dragCircleStart,
     dragCircleStop,
   },

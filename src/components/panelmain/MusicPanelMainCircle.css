@@ -10,4 +10,8 @@
   &.ap-music-panel-main-circle--hover {
     color: red;
   }
+  &.ap-music-panel-main-circle--selected {
+    color: green;
+    font-weight: bold;
+  }
 }

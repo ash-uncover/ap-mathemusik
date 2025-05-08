@@ -14,6 +14,7 @@ export const MusicStates: {
 export interface Circle {
   key: string
   rotate: number
+  defaultNote: string
   notes: Note[]
 }
 export interface Note {

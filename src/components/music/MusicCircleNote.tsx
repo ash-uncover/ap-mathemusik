@@ -41,7 +41,6 @@ export const MusicCircleNote = ({
   useEffect(() => {
     if (!circleDraging) {
       const newDelay = (duration * position / period + (circle.rotate * duration / 360)) % duration
-      console.log('delay', newDelay * 1000, 'period', period * 1000, 'duration', duration * 1000)
       setDelay(newDelay)
     }
   }, [duration, position, period, circle, circleDraging])

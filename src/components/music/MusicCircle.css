@@ -1,18 +1,45 @@
+@keyframes selectedCircle {
+  0% {
+    box-shadow: inset 0px 0px 10px var(--ap-music-border-color--selected), 0px 0px 10px var(--ap-music-border-color--selected);
+  }
+
+  50% {
+    box-shadow: inset 0px 0px 2px var(--ap-music-border-color--selected), 0px 0px 2px var(--ap-music-border-color--selected);
+  }
+}
+
 .ap-music-circle {
   position: relative;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 50%;
   
   &.ap-music-circle--hover {
     &>.ap-music-circle_inner {
-      background: rgba(255, 0, 0, 0.2);
       &>.ap-music-circle_notes {
         border-color: var(--ap-music-border-color--hover);
+        box-shadow: inset 0px 0px 10px var(--ap-music-border-color--hover), 0px 0px 10px var(--ap-music-border-color--hover);
         &>.ap-music-circle-note {
           &>.ap-music-circle-note-inner {
             border-color: var(--ap-music-border-color--hover);
+            box-shadow: 0px 0px 10px var(--ap-music-border-color--hover);
+          }
+        }
+      }
+    }
+  }
+
+  &.ap-music-circle--selected {
+    &>.ap-music-circle_inner {
+      &>.ap-music-circle_notes {
+        border-color: var(--ap-music-border-color--selected);
+        box-shadow: inset 0px 0px 10px var(--ap-music-border-color--selected), 0px 0px 10px var(--ap-music-border-color--selected);
+        animation: 1.5s infinite selectedCircle;
+        &>.ap-music-circle-note {
+          &>.ap-music-circle-note-inner {
+            border-color: var(--ap-music-border-color--selected);
+            box-shadow: 0px 0px 10px var(--ap-music-border-color--selected);
           }
         }
       }

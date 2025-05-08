@@ -21,6 +21,7 @@ export const MusicPanelMainCircle = ({
   const musicState = useSelector(DataSelectors.musicState)
   const circle = useSelector(DataSelectors.circleByIndex(index))
   const circleHovered = useSelector(DataSelectors.circleHovered)
+  const circleSelected = useSelector(DataSelectors.circleSelected)
   // #endregion
 
   // #region Callbacks
@@ -29,6 +30,9 @@ export const MusicPanelMainCircle = ({
   }
   function handleMouseOut() {
     dispatch(DataSlice.actions.leaveCircle(circle.key))
+  }
+  function handleClick() {
+    dispatch(DataSlice.actions.selectCircle(circle.key))
   }
   function handleButtonDeleteCircleClick(index: number) {
     dispatch(DataSlice.actions.deleteCircle(index))
@@ -40,14 +44,18 @@ export const MusicPanelMainCircle = ({
   if (className) {
     classes.push(className)
   }
-  if (circleHovered === circle.key) {
+  if (circleSelected !== circle.key && circleHovered === circle.key) {
     classes.push('ap-music-panel-main-circle--hover')
+  }
+  if (circleSelected === circle.key) {
+    classes.push('ap-music-panel-main-circle--selected')
   }
   return (
     <li
       className={classes.join(' ')}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={handleClick}
     >
       <span className='ap-music-panel-main-circle_text'>
         {`Circle n°${index + 1}`}

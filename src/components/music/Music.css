@@ -4,6 +4,7 @@
   --ap-music-circle-size: 2rem;
   --ap-music-border-color: grey;
   --ap-music-border-color--hover: tomato;
+  --ap-music-border-color--selected: teal;
   --ap-music-note-color: black;
   --ap-music-note-color--active: yellow;
   --ap-music-note-color--playing: red;
@@ -19,6 +20,19 @@
 
   to {
     transform: rotate(360deg);
+  }
+}
+@keyframes selection {
+  0% {
+    background-color: var(--ap-music-note-color--playing);
+  }
+
+  10% {
+    background-color: var(--ap-music-note-color--active);
+  }
+
+  99% {
+    background-color: var(--ap-music-note-color--active);
   }
 }
 
@@ -97,6 +111,10 @@
 
   &.ap-music-container--play {
     &>.ap-music-container_content {
+      pointer-events: none;
+      & * {
+        pointer-events: none !important;
+      }
       & .ap-music-circle {
         &>.ap-music-circle_inner {
           &>.ap-music-circle_notes {
